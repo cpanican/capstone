@@ -41,7 +41,7 @@ def segment(image, threshold=25):
                                 cv2.THRESH_BINARY)[1]
 
     # get the contours in the thresholded image
-    (__, cnts, __) = cv2.findContours(thresholded.copy(),
+    (cnts, heirarchy) = cv2.findContours(thresholded.copy(),
                                     cv2.RETR_EXTERNAL,
                                     cv2.CHAIN_APPROX_SIMPLE)
 

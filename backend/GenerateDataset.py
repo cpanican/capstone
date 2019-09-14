@@ -6,6 +6,9 @@ import numpy as np
 # global variables
 bg = None
 
+# get the reference to the webcam
+camera = cv2.VideoCapture(0)
+
 def run_avg(image, aWeight):
     global bg
     # initialize the background
@@ -28,7 +31,7 @@ def segment(image, threshold=25):
                                 cv2.THRESH_BINARY)[1]
 
     # get the contours in the thresholded image
-    (__, cnts, __) = cv2.findContours(thresholded.copy(),
+    (cnts, heirarchy) = cv2.findContours(thresholded.copy(),
                                     cv2.RETR_EXTERNAL,
                                     cv2.CHAIN_APPROX_SIMPLE)
 
@@ -43,9 +46,6 @@ def segment(image, threshold=25):
 def main():
     # initialize weight for running average
     aWeight = 0.5
-
-    # get the reference to the webcam
-    camera = cv2.VideoCapture(0)
 
     # region of interest (ROI) coordinates
     top, right, bottom, left = 10, 350, 225, 590
