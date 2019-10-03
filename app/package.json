@@ -1,0 +1,82 @@
+{
+	"name": "app",
+	"version": "0.1.0",
+	"private": true,
+	"main": "public/electron.js",
+	"scripts": {
+		"dev": "yarn react-scripts start",
+		"build": "react-scripts build",
+		"start": "concurrently \"cross-env BROWSER=none yarn react-scripts start\" \"wait-on http://localhost:3000 && electron .\"",
+		"pack": "electron-builder --dir",
+		"dist": "npx build --x64 --macos --win --linux --c.extraMetadata.main=build/electron.js -p always"
+	},
+	"dependencies": {
+		"electron-is-dev": "^0.3.0",
+		"electron-publisher-s3": "^20.17.2",
+		"react": "^16.4.1",
+		"react-dev-utils": "^5.0.1",
+		"react-dom": "^16.10.1"
+	},
+	"devDependencies": {
+		"concurrently": "^3.6.0",
+		"cross-env": "^5.2.0",
+		"electron": "^2.0.3",
+		"electron-builder": "^20.18.0",
+		"electron-devtools-installer": "^2.2.4",
+		"react-scripts": "1.1.4",
+		"version-bump-prompt": "^4.1.0",
+		"wait-on": "^3.3.0"
+	},
+	"build": {
+		"appId": "com.your-domain",
+		"compression": "normal",
+		"productName": "Example",
+		"directories": {
+			"buildResources": "build",
+			"output": "dist"
+		},
+		"mac": {
+			"icon": "assets/icon.icns",
+			"type": "distribution",
+			"target": [
+				"pkg",
+				"dmg",
+				"mas"
+			],
+			"publish": {
+				"provider": "s3",
+				"bucket": "example-releases",
+				"path": "releases"
+			},
+			"category": "public.app-category.news"
+		},
+		"mas": {
+			"entitlements": "assets/entitlements.mas.plist",
+			"entitlementsInherit": "assets/entitlements.mas.inherit.plist",
+			"provisioningProfile": "assets/embedded.provisionprofile"
+		},
+		"win": {
+			"target": "nsis",
+			"icon": "assets/icon.ico",
+			"publish": {
+				"provider": "s3",
+				"bucket": "example-releases",
+				"path": "releases"
+			}
+		},
+		"linux": {
+			"icon": "assets/icon.png",
+			"target": [
+				"snap",
+				"AppImage"
+			],
+			"description": "Example",
+			"category": "Network;Feed",
+			"publish": {
+				"provider": "s3",
+				"bucket": "example-releases",
+				"path": "releases"
+			}
+		}
+	}
+}

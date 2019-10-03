@@ -1,6 +1,0 @@
-tensorflow
-tflearn
-opencv-python
-numpy
-pillow
-imutils

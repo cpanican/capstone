@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Hand Signals With Visual Data (Server)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cpanican/capstone.git"
+  },
+  "author": "Ayushya Amitabh, Chris Panican, Gerry Xu, Omar Elnagdy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cpanican/capstone/issues"
+  },
+  "homepage": "https://github.com/cpanican/capstone#readme"
+}
