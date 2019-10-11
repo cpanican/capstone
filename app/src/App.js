@@ -1,13 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
 
-function App() {
-  return (
-    <div className="App">
-      Hand Signals With Visual Data
-    </div>
-  );
+class App extends Component {
+  render() {
+    ipcRenderer.send('from-react', 'THIS IS FROM ME');
+    return (
+      <div className="App">
+        Hand Signals With Visual Data
+      </div>
+    );
+  }
 }
 
 export default App;

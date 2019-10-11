@@ -4,17 +4,17 @@
 	"private": true,
 	"main": "public/electron.js",
 	"scripts": {
-		"dev": "yarn react-scripts start",
+		"dev": "react-scripts start",
 		"build": "react-scripts build",
-		"start": "concurrently \"cross-env BROWSER=none yarn react-scripts start\" \"wait-on http://localhost:3000 && electron .\"",
+		"start": "concurrently \"cross-env BROWSER=none react-scripts start\" \"wait-on http://localhost:3000 && electron .\"",
 		"pack": "electron-builder --dir",
 		"dist": "npx build --x64 --macos --win --linux --c.extraMetadata.main=build/electron.js -p always"
 	},
 	"dependencies": {
+		"antd": "^3.23.6",
 		"electron-is-dev": "^0.3.0",
 		"electron-publisher-s3": "^20.17.2",
 		"react": "^16.4.1",
-		"react-dev-utils": "^5.0.1",
 		"react-dom": "^16.10.1"
 	},
 	"devDependencies": {
@@ -23,6 +23,7 @@
 		"electron": "^2.0.3",
 		"electron-builder": "^20.18.0",
 		"electron-devtools-installer": "^2.2.4",
+		"react-dev-utils": "^5.0.1",
 		"react-scripts": "1.1.4",
 		"version-bump-prompt": "^4.1.0",
 		"wait-on": "^3.3.0"
