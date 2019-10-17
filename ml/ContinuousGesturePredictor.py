@@ -151,6 +151,8 @@ def showStatistics(predictedClass, confidence):
         className = "Palm"
     elif predictedClass == 2:
         className = "Fist"
+    elif predictedClass == 3:
+        className = "Point"
 
     cv2.putText(textImage,"Predicted Class: " + className, 
     (30, 30), 
@@ -166,8 +168,6 @@ def showStatistics(predictedClass, confidence):
     (255, 255, 255),
     2)
     cv2.imshow("Statistics", textImage)
-
-
 
 
 # Model defined
@@ -196,7 +196,8 @@ convnet=max_pool_2d(convnet,2)
 convnet=fully_connected(convnet,1000,activation='relu')
 convnet=dropout(convnet,0.75)
 
-convnet=fully_connected(convnet,3,activation='softmax')
+# second parameter in fully_connected is number of classes
+convnet=fully_connected(convnet,4,activation='softmax')
 
 convnet=regression(convnet,optimizer='adam',learning_rate=0.001,loss='categorical_crossentropy',name='regression')
 

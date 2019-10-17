@@ -51,3 +51,7 @@ Run `python3 ContinuousGesturePredictor.py` and you will see a window named **Vi
 Then press **"s"** on your keyboard in order to start the real-time prediction.
 
 Bring your hand in the **Green Box** drawn inside **Video Feed** window in order to see the predictions.
+
+## References
+
+https://github.com/SparshaSaha/Hand-Gesture-Recognition-Using-Background-Elllimination-and-Convolution-Neural-Network
