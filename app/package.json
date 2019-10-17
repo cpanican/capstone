@@ -14,6 +14,7 @@
 		"antd": "^3.23.6",
 		"electron-is-dev": "^0.3.0",
 		"electron-publisher-s3": "^20.17.2",
+		"eslint": "^5.16.0",
 		"react": "^16.4.1",
 		"react-dom": "^16.10.1"
 	},
@@ -23,7 +24,6 @@
 		"electron": "^2.0.3",
 		"electron-builder": "^20.18.0",
 		"electron-devtools-installer": "^2.2.4",
-		"eslint": "^6.1.0",
 		"eslint-config-airbnb": "^18.0.1",
 		"eslint-config-prettier": "^6.4.0",
 		"eslint-plugin-import": "^2.18.2",
