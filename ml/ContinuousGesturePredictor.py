@@ -143,18 +143,15 @@ def getPredictedClass():
 def showStatistics(predictedClass, confidence):
 
     textImage = np.zeros((300,512,3), np.uint8)
-    className = ""
 
-    if predictedClass == 0:
-        className = "Swing"
-    elif predictedClass == 1:
-        className = "Palm"
-    elif predictedClass == 2:
-        className = "Fist"
-    elif predictedClass == 3:
-        className = "Point"
+    className = {
+      0: "Swing",
+      1: "Palm",
+      2: "Fist",
+      3: "Point"
+    }
 
-    cv2.putText(textImage,"Predicted Class: " + className, 
+    cv2.putText(textImage,"Predicted Class: " + className[predictedClass], 
     (30, 30), 
     cv2.FONT_HERSHEY_SIMPLEX, 
     1,
