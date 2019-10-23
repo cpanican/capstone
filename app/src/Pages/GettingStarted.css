@@ -1,0 +1,47 @@
+/*
+================================
+GENERAL PAGE STRUCTURE STYLES
+================================
+*/
+.ant-carousel {
+    height: 100%;
+    background-color: darkslateblue;
+}
+.getting-started-carousel {
+    height: calc(100% - 4px);
+}
+.slick-track, .slick-list, .carousel-section, .slick-slide > div {
+    height: 100%;
+}
+.carousel-section {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 50%;
+    padding: 4rem 0;
+}
+.carousel-section > article {
+    max-width: 45%;
+    flex: 1
+}
+.carousel-section > article * {
+    color: white;
+    text-align: center;
+}
+
+/*
+================================
+SPECIFIC CUSTOM STYLES
+================================
+*/
+.title-emoji span {
+    font-size: 8rem;
+}
+#webcam-video {
+    background-color: rgba(0,0,0,0.2);
+    filter: drop-shadow(0px 0px 50px rgba(0,0,0,0.2));
+    margin: 20px;
+    margin-top: 0px;
+    border-radius: 20px;
+}

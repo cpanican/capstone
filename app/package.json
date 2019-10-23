@@ -39,7 +39,7 @@
 	"build": {
 		"appId": "com.your-domain",
 		"compression": "normal",
-		"productName": "Example",
+		"productName": "Hand Signals",
 		"directories": {
 			"buildResources": "build",
 			"output": "dist"
