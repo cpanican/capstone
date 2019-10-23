@@ -143,16 +143,15 @@ def getPredictedClass():
 def showStatistics(predictedClass, confidence):
 
     textImage = np.zeros((300,512,3), np.uint8)
-    className = ""
 
-    if predictedClass == 0:
-        className = "Swing"
-    elif predictedClass == 1:
-        className = "Palm"
-    elif predictedClass == 2:
-        className = "Fist"
+    className = {
+      0: "Swing",
+      1: "Palm",
+      2: "Fist",
+      3: "Point"
+    }
 
-    cv2.putText(textImage,"Predicted Class: " + className, 
+    cv2.putText(textImage,"Predicted Class: " + className[predictedClass], 
     (30, 30), 
     cv2.FONT_HERSHEY_SIMPLEX, 
     1,
@@ -166,8 +165,6 @@ def showStatistics(predictedClass, confidence):
     (255, 255, 255),
     2)
     cv2.imshow("Statistics", textImage)
-
-
 
 
 # Model defined
@@ -196,7 +193,8 @@ convnet=max_pool_2d(convnet,2)
 convnet=fully_connected(convnet,1000,activation='relu')
 convnet=dropout(convnet,0.75)
 
-convnet=fully_connected(convnet,3,activation='softmax')
+# second parameter in fully_connected is number of classes
+convnet=fully_connected(convnet,4,activation='softmax')
 
 convnet=regression(convnet,optimizer='adam',learning_rate=0.001,loss='categorical_crossentropy',name='regression')
 

@@ -101,7 +101,7 @@ def main():
                     if start_recording:
 
                         # Mention the directory in which you wanna store the images followed by the image name
-                        cv2.imwrite("Dataset/FistTest/fist_" + str(image_num) + '.png', thresholded)
+                        cv2.imwrite("Dataset/PointImages/point_" + str(image_num) + '.png', thresholded)
                         image_num += 1
                     cv2.imshow("Thesholded", thresholded)
 
@@ -118,7 +118,7 @@ def main():
             keypress = cv2.waitKey(1) & 0xFF
 
             # if the user pressed "q", then stop looping
-            if keypress == ord("q") or image_num > 100:
+            if keypress == ord("q") or image_num > 1000:
                 break
         
             if keypress == ord("s"):
