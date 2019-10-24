@@ -4,7 +4,8 @@
   "description": "Hand Signals With Visual Data (Server)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/cpanican/capstone/issues"
   },
-  "homepage": "https://github.com/cpanican/capstone#readme"
+  "homepage": "https://github.com/cpanican/capstone#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "multer": "^1.4.2"
+  }
 }
