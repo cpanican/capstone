@@ -9,6 +9,7 @@ GENERAL PAGE STRUCTURE STYLES
 }
 .getting-started-carousel {
     height: calc(100% - 4px);
+    overflow: hidden;
 }
 .slick-track, .slick-list, .carousel-section, .slick-slide > div {
     height: 100%;
