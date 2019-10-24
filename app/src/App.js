@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
+import { GettingStarted } from './Pages/index';
 import './App.css';
-const electron = window.require('electron');
-const ipcRenderer = electron.ipcRenderer;
 
 class App extends Component {
   render() {
-    ipcRenderer.send('from-react', 'THIS IS FROM ME');
     return (
       <div className="App">
-        Hand Signals With Visual Data
+        <GettingStarted />
       </div>
     );
   }

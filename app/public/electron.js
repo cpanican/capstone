@@ -18,7 +18,7 @@ createWindow = () => {
 		minHeight: 500,
 		show: false,
 		webPreferences: {
-			preload: __dirname + '/preload.js',
+			nodeIntegration : false
 		},
 		height: 860,
 		width: 1280,
