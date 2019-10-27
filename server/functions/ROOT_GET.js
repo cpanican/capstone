@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = (getRequest, getResponse) => {
-    getResponse.sendFile(path.join(__dirname + `/../pages/ROOT_GET.html`));
+    getResponse.status(200).send("Server is alive");
 }
