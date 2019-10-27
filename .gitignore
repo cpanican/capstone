@@ -24,3 +24,6 @@ yarn-error.log*
 
 /ml/Temp.png
 .ipynb_*
+
+# server
+*/uploads/

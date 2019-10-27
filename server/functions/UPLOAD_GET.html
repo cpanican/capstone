@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Model Upload | 🖐</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                padding: 50px;
+                height: calc(100vh - 100px);
+                transition: all ease-in-out 0.4s;
+            }
+            body.fullsized {
+                padding: 0;
+                height: 100vh;
+            }
+            body.expanded {
+                padding: 25px;
+                height: calc(100vh - 50px);
+            }
+            .dragArea {
+                flex: 1;
+                background-color: #d1d1d1;
+                border: 10px dashed #8b8b8b;
+                border-radius: 50px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: all ease-in-out 0.4s;
+            }
+            .dragged {
+                filter: drop-shadow(0px 0px 50px #8b8b8b);
+            }
+            .dropped {
+                background-color: #8dfca5;
+                border: 5px solid #214629;
+                border-radius: 0px;
+                padding: 20px;
+                justify-content: flex-start;
+            }
+            .dragArea p {
+                font-family: sans-serif;
+                text-transform: uppercase;
+                font-size: 2rem;
+                color: #8b8b8b;
+                user-select: none;
+                margin: 0;
+            }
+            .dropped p {
+                color: #1e692e;
+                align-self: flex-start;
+            }
+            .spacer {
+                flex: 1;
+            }
+            .bottom-button {
+                font-family: sans-serif;
+                font-size: 1rem;
+                text-transform: uppercase;
+                color: white;
+                align-self: stretch;
+                text-align: center;
+                padding: 10px 5px;
+                background-color: darkgreen;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: all ease-in-out 0.3s;
+            }
+            .bottom-button:hover {
+                filter: drop-shadow(0px 0px 5px #206125);
+            }
+            .file-item {
+                align-self: stretch;
+                padding: 10px;
+                background: darkgreen;
+                border-radius: 10px;
+                margin-top: 15px;
+            }
+            .file-item p {
+                color: white;
+                text-transform: none;
+            }
+            .file-item progress {
+                display: block;
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="dragArea" ondrop="dropped(event)" ondragover="dragged(event)" ondragleave="draggend(event)">
+            <p>
+                Drop Model Here...
+            </p>
+        </div>
+        <script>
+            let TRANSFER_LIST = [];
+            function dropped (e) {
+                e.preventDefault();
+                TRANSFER_LIST = e.dataTransfer.files;
+                document.body.classList.replace('expanded', 'fullsized');
+                e.target.classList.replace('dragged', 'dropped');
+                e.target.innerHTML = '<p>files</p>';
+                let tobehtml = '';
+                for (var i = 0; i < TRANSFER_LIST.length; i++) {
+                    tobehtml += '<div class="file-item"><p>';
+                    tobehtml += TRANSFER_LIST.item(i).name;
+                    tobehtml += '</p><progress id="';
+                    tobehtml += TRANSFER_LIST.item(i).name;
+                    tobehtml += '-progress" max="100" value="0"> </progress> </div>';
+                }
+                e.target.innerHTML += tobehtml;
+                e.target.innerHTML += '<span class="spacer"> </span> <div onclick="upload()" class="bottom-button">UPLOAD</div>';
+            }
+            function dragged (e) {
+                document.body.classList.add('expanded');
+                e.target.classList.add('dragged');
+                e.preventDefault();
+            }
+            function draggend (e) {
+                document.body.classList.remove('expanded');
+                e.target.classList.remove('dragged');
+            }
+            function sendFile (file) {
+                var formData = new FormData();
+                var request = new XMLHttpRequest();
+                formData.append('model', file);
+                request.open('post', window.location.href, true);
+                request.upload.onprogress = function (ev) {
+                    if (ev.lengthComputable) {
+                        var percentComplete = ev.loaded / ev.total * 100;
+                        document.getElementById(file.name + '-progress').value = percentComplete;
+                    }
+                };
+                request.send(formData);
+            }
+            function upload () {
+                for (var i = 0; i < TRANSFER_LIST.length; i++) {
+                    sendFile(TRANSFER_LIST.item(i));
+                }
+            }
+        </script>
+    </body>
+</html>
