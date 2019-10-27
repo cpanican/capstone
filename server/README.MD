@@ -7,7 +7,14 @@ _Ayushya Amitabh_
 
 #### ENDPOINTS
 
-The server defaults to [port 3000](http://localhost:3000).
+The server defaults to [port 3000](http://localhost:3000).  
+To start the server:
+```bash
+$ cd server
+$ npm start # runs > node index.js
+```  
+
+
 | Method | URL                                                   | Purpose                                                 |
 |--------|-------------------------------------------------------|---------------------------------------------------------|
 | GET    | [/](http://localhost:3000/)                           | Checks if server is alive                               |
