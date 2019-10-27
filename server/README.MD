@@ -19,8 +19,10 @@ The server defaults to [port 3000](http://localhost:3000).
 
  #### SERVER STRUCTURE
 
-.  
+```bash
+.server  
 +-- index.js                                    - server root  
 |   +-- uploads/                                - folder containing uploads  
 |   |   +-- status.json                         - maintains model version info  
 |   |   +-- {filename}-{datestring}.{extension} - format of saved models
+```
