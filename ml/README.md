@@ -20,7 +20,7 @@ This is a simple application of Convolution Neural Networks combined with backgr
 To install these packages, you must have **pip** installed on your machine.
 
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## File Description
@@ -55,7 +55,7 @@ The ratio of training set to validation set is **1000 : 100**.
 
 ## How to train the model
 
-To train your model, open `ModelTrainer.ipynb` in jupyter notebook to train your model. If you don't have jupyter notebook installed, you can convert .ipynb to .py file by running this command in your terminal `ipython nbconvert --to python ModelTrainer.ipynb`. Now you can just run `python3 ModelTrainer.py`.
+To train your model, open `ModelTrainer.ipynb` in jupyter notebook to train your model. If you don't have jupyter notebook installed, you can convert the `ModelTrainer.ipynb` to `ModelTrainer.py` file by running this command in your terminal `ipython nbconvert --to python ModelTrainer.ipynb`. Now you can just run `python3 ModelTrainer.py` to train your model.
 
 ## How to run the RealTime prediction
 
