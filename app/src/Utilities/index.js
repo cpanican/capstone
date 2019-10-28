@@ -1,2 +1,6 @@
 import Webcam from './Webcam';
-export  { Webcam };
+import Server from './Server';
+export {
+    Webcam,
+    Server
+};

@@ -1,14 +1,33 @@
 import React, { useRef } from 'react';
 import { Carousel, Typography, Button, Icon } from 'antd';
 import './GettingStarted.css';
-import { Webcam } from '../Utilities';
+import { Webcam, Server } from '../Utilities';
 
 const GettingStarted = (props) => {
     const gettingStartedWebcam = new Webcam('webcam-video');
+    const serverConnectionInstance = new Server();
     const carouselRef = useRef(null);
 
     const nextSlide = () => carouselRef.current.next();
     const prevSlide = () => carouselRef.current.prev();
+
+    serverConnectionInstance.connect();
+    const versions = [];
+    serverConnectionInstance.getVersions().then(v => {
+        function checkTime (i) {
+            if (i < 10) {
+              i = "0" + i;
+            }
+            return i;
+        }
+        v.versions.forEach( versionDate => {
+            let d = new Date();
+            d.setTime(versionDate);
+            d = d.toLocaleDateString() + ' @ ' + checkTime(d.getHours()) + ':' + checkTime(d.getMinutes());
+            versions.push(d);
+        });
+        console.log(versions);
+    });
 
     return (
         <Carousel className="getting-started-carousel" ref={carouselRef}>
@@ -37,12 +56,12 @@ const GettingStarted = (props) => {
                 <Typography>
                     <Typography.Title >
                         Camera Check
-                </Typography.Title>
+                    </Typography.Title>
                     <Typography.Title level={4}>
                         Let's take a quick moment to make sure your webcam works. <br />
                         You might be asked to grant access to your camera. <br />
                         Click on the button below to start the camera.
-                </Typography.Title>
+                    </Typography.Title>
                 </Typography>
                 <video autoPlay height="480" width="800" id="webcam-video" />
                 <Button.Group>
@@ -51,13 +70,19 @@ const GettingStarted = (props) => {
                     >
                         <Icon type="left" />
                         Back
-                </Button>
+                    </Button>
                     <Button
                         onClick={gettingStartedWebcam.start}
                         type="primary"
                     >
-                        Check Webcam
-                </Button>
+                        Start Webcam
+                    </Button>
+                    <Button
+                        onClick={gettingStartedWebcam.stop}
+                        type="danger"
+                    >
+                        Stop Webcam
+                    </Button>
                     <Button
                         onClick={nextSlide}
                     >
@@ -70,11 +95,11 @@ const GettingStarted = (props) => {
                 <Typography>
                     <Typography.Title>
                         Downloads
-                </Typography.Title>
+                    </Typography.Title>
                     <Typography.Title level={4}>
                         We have to download the deep learning model from our server,
                         along with a tool to allow simulating key press and mouse movements.
-                </Typography.Title>
+                    </Typography.Title>
                 </Typography>
                 <Button.Group>
                     <Button
@@ -100,11 +125,11 @@ const GettingStarted = (props) => {
                 <Typography>
                     <Typography.Title>
                         All Done
-                </Typography.Title>
+                    </Typography.Title>
                     <Typography.Title level={4}>
                         You're ready to customize and use our software. <br />
                         Click on finish, and start using your webcam instead of your trackpad
-                </Typography.Title>
+                    </Typography.Title>
                 </Typography>
                 <Button.Group>
                     <Button

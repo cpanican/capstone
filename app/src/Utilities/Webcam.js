@@ -21,4 +21,8 @@ export default class Webcam {
             error => console.error(error)
         );
     }
+    stop = () => {
+        const elem = document.getElementById(this.__elemId);
+        elem.src = null;
+    }
 }
