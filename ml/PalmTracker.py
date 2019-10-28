@@ -6,6 +6,7 @@ import numpy as np
 # global variables
 bg = None
 
+
 def run_avg(image, aWeight):
     global bg
     # initialize the background
@@ -15,6 +16,7 @@ def run_avg(image, aWeight):
 
     # compute weighted average, accumulate it and update the background
     cv2.accumulateWeighted(image, bg, aWeight)
+
 
 def segment(image, threshold=25):
     global bg
@@ -29,8 +31,8 @@ def segment(image, threshold=25):
 
     # get the contours in the thresholded image
     (cnts, heirarchy) = cv2.findContours(thresholded.copy(),
-                                    cv2.RETR_EXTERNAL,
-                                    cv2.CHAIN_APPROX_SIMPLE)
+                                         cv2.RETR_EXTERNAL,
+                                         cv2.CHAIN_APPROX_SIMPLE)
 
     # return None, if no contours detected
     if len(cnts) == 0:
@@ -40,8 +42,10 @@ def segment(image, threshold=25):
         segmented = max(cnts, key=cv2.contourArea)
         return (thresholded, segmented)
 
+
 # get the reference to the webcam
 camera = cv2.VideoCapture(0)
+
 
 def main():
     # initialize weight for running average
@@ -97,16 +101,18 @@ def main():
                     (thresholded, segmented) = hand
 
                     # draw the segmented region and display the frame
-                    cv2.drawContours(clone, [segmented + (right, top)], -1, (0, 0, 255))
+                    cv2.drawContours(
+                        clone, [segmented + (right, top)], -1, (0, 0, 255))
                     if start_recording:
 
                         # Mention the directory in which you wanna store the images followed by the image name
-                        cv2.imwrite("Dataset/PointImages/point_" + str(image_num) + '.png', thresholded)
+                        cv2.imwrite("Dataset/PointImages/point_" +
+                                    str(image_num) + '.png', thresholded)
                         image_num += 1
                     cv2.imshow("Thesholded", thresholded)
 
             # draw the segmented hand
-            cv2.rectangle(clone, (left, top), (right, bottom), (0,255,0), 2)
+            cv2.rectangle(clone, (left, top), (right, bottom), (0, 255, 0), 2)
 
             # increment the number of frames
             num_frames += 1
@@ -120,13 +126,15 @@ def main():
             # if the user pressed "q", then stop looping
             if keypress == ord("q") or image_num > 1000:
                 break
-        
+
             if keypress == ord("s"):
                 start_recording = True
 
         else:
-            print("[Warning!] Error input, Please check your(camra Or video)")
+            print("[Warning!] Error input, Please check that your camera is connected.")
             break
+
+
 main()
 
 # free up memory

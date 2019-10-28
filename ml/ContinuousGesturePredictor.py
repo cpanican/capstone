@@ -1,7 +1,7 @@
 import tensorflow as tf
 import tflearn
-from tflearn.layers.conv import conv_2d,max_pool_2d
-from tflearn.layers.core import input_data,dropout,fully_connected
+from tflearn.layers.conv import conv_2d, max_pool_2d
+from tflearn.layers.core import input_data, dropout, fully_connected
 from tflearn.layers.estimator import regression
 import numpy as np
 from PIL import Image
@@ -11,13 +11,15 @@ import imutils
 # global variables
 bg = None
 
+
 def resizeImage(imageName):
     basewidth = 100
     img = Image.open(imageName)
     wpercent = (basewidth/float(img.size[0]))
     hsize = int((float(img.size[1])*float(wpercent)))
-    img = img.resize((basewidth,hsize), Image.ANTIALIAS)
+    img = img.resize((basewidth, hsize), Image.ANTIALIAS)
     img.save(imageName)
+
 
 def run_avg(image, aWeight):
     global bg
@@ -28,6 +30,7 @@ def run_avg(image, aWeight):
 
     # compute weighted average, accumulate it and update the background
     cv2.accumulateWeighted(image, bg, aWeight)
+
 
 def segment(image, threshold=25):
     global bg
@@ -42,8 +45,8 @@ def segment(image, threshold=25):
 
     # get the contours in the thresholded image
     (cnts, heirarchy) = cv2.findContours(thresholded.copy(),
-                                    cv2.RETR_EXTERNAL,
-                                    cv2.CHAIN_APPROX_SIMPLE)
+                                         cv2.RETR_EXTERNAL,
+                                         cv2.CHAIN_APPROX_SIMPLE)
 
     # return None, if no contours detected
     if len(cnts) == 0:
@@ -53,8 +56,10 @@ def segment(image, threshold=25):
         segmented = max(cnts, key=cv2.contourArea)
         return (thresholded, segmented)
 
+
 #  get the reference to the webcam
 camera = cv2.VideoCapture(0)
+
 
 def main():
     # initialize weight for running average
@@ -73,7 +78,7 @@ def main():
         (grabbed, frame) = camera.read()
 
         # resize the frame
-        frame = imutils.resize(frame, width = 700)
+        frame = imutils.resize(frame, width=700)
 
         # flip the frame so that it is not the mirror view
         frame = cv2.flip(frame, 1)
@@ -106,7 +111,8 @@ def main():
                 (thresholded, segmented) = hand
 
                 # draw the segmented region and display the frame
-                cv2.drawContours(clone, [segmented + (right, top)], -1, (0, 0, 255))
+                cv2.drawContours(
+                    clone, [segmented + (right, top)], -1, (0, 0, 255))
                 if start_recording:
                     cv2.imwrite('Temp.png', thresholded)
                     resizeImage('Temp.png')
@@ -115,7 +121,7 @@ def main():
                 cv2.imshow("Thesholded", thresholded)
 
         # draw the segmented hand
-        cv2.rectangle(clone, (left, top), (right, bottom), (0,255,0), 2)
+        cv2.rectangle(clone, (left, top), (right, bottom), (0, 255, 0), 2)
 
         # increment the number of frames
         num_frames += 1
@@ -129,76 +135,79 @@ def main():
         # if the user pressed "q", then stop looping
         if keypress == ord("q"):
             break
-        
+
         if keypress == ord("s"):
             start_recording = True
+
 
 def getPredictedClass():
     # Predict
     image = cv2.imread('Temp.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     prediction = model.predict([gray_image.reshape(89, 100, 1)])
-    return np.argmax(prediction), (np.amax(prediction) / (prediction[0][0] + prediction[0][1] + prediction[0][2]))
+    return np.argmax(prediction), (np.amax(prediction) / (prediction[0][0] + prediction[0][1] + prediction[0][2] + prediction[0][3]))
+
 
 def showStatistics(predictedClass, confidence):
 
-    textImage = np.zeros((300,512,3), np.uint8)
+    textImage = np.zeros((300, 512, 3), np.uint8)
 
     className = {
-      0: "Swing",
-      1: "Palm",
-      2: "Fist",
-      3: "Point"
+        0: "Swing",
+        1: "Palm",
+        2: "Fist",
+        3: "Point"
     }
 
-    cv2.putText(textImage,"Predicted Class: " + className[predictedClass], 
-    (30, 30), 
-    cv2.FONT_HERSHEY_SIMPLEX, 
-    1,
-    (255, 255, 255),
-    2)
+    cv2.putText(textImage, "Predicted Class: " + className[predictedClass],
+                (30, 30),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                1,
+                (255, 255, 255),
+                2)
 
-    cv2.putText(textImage,"Confidence: " + str(round((confidence * 100), 5)) + '%', 
-    (30, 100), 
-    cv2.FONT_HERSHEY_SIMPLEX, 
-    1,
-    (255, 255, 255),
-    2)
+    cv2.putText(textImage, "Confidence: " + str(round((confidence * 100), 3)) + '%',
+                (30, 100),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                1,
+                (255, 255, 255),
+                2)
     cv2.imshow("Statistics", textImage)
 
 
 # Model defined
 tf.reset_default_graph()
-convnet=input_data(shape=[None,89,100,1],name='input')
-convnet=conv_2d(convnet,32,2,activation='relu')
-convnet=max_pool_2d(convnet,2)
-convnet=conv_2d(convnet,64,2,activation='relu')
-convnet=max_pool_2d(convnet,2)
+convnet = input_data(shape=[None, 89, 100, 1], name='input')
+convnet = conv_2d(convnet, 32, 2, activation='relu')
+convnet = max_pool_2d(convnet, 2)
+convnet = conv_2d(convnet, 64, 2, activation='relu')
+convnet = max_pool_2d(convnet, 2)
 
-convnet=conv_2d(convnet,128,2,activation='relu')
-convnet=max_pool_2d(convnet,2)
+convnet = conv_2d(convnet, 128, 2, activation='relu')
+convnet = max_pool_2d(convnet, 2)
 
-convnet=conv_2d(convnet,256,2,activation='relu')
-convnet=max_pool_2d(convnet,2)
+convnet = conv_2d(convnet, 256, 2, activation='relu')
+convnet = max_pool_2d(convnet, 2)
 
-convnet=conv_2d(convnet,256,2,activation='relu')
-convnet=max_pool_2d(convnet,2)
+convnet = conv_2d(convnet, 256, 2, activation='relu')
+convnet = max_pool_2d(convnet, 2)
 
-convnet=conv_2d(convnet,128,2,activation='relu')
-convnet=max_pool_2d(convnet,2)
+convnet = conv_2d(convnet, 128, 2, activation='relu')
+convnet = max_pool_2d(convnet, 2)
 
-convnet=conv_2d(convnet,64,2,activation='relu')
-convnet=max_pool_2d(convnet,2)
+convnet = conv_2d(convnet, 64, 2, activation='relu')
+convnet = max_pool_2d(convnet, 2)
 
-convnet=fully_connected(convnet,1000,activation='relu')
-convnet=dropout(convnet,0.75)
+convnet = fully_connected(convnet, 1000, activation='relu')
+convnet = dropout(convnet, 0.75)
 
 # second parameter in fully_connected is number of classes
-convnet=fully_connected(convnet,4,activation='softmax')
+convnet = fully_connected(convnet, 4, activation='softmax')
 
-convnet=regression(convnet,optimizer='adam',learning_rate=0.001,loss='categorical_crossentropy',name='regression')
+convnet = regression(convnet, optimizer='adam', learning_rate=0.001,
+                     loss='categorical_crossentropy', name='regression')
 
-model=tflearn.DNN(convnet,tensorboard_verbose=0)
+model = tflearn.DNN(convnet, tensorboard_verbose=0)
 
 # Load Saved Model
 model.load("TrainedModel/GestureRecogModel.tfl")
