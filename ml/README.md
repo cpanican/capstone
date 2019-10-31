@@ -16,8 +16,7 @@ This is a simple application of Convolution Neural Networks combined with backgr
 
 ## Installation
 
-`requirements.txt` specifies the required packages needed to run this project.
-To install these packages, you must have **pip** installed on your machine.
+`requirements.txt` specifies the required packages needed to run this project. To install these packages, you must have **pip3** installed on your machine.
 
 ```bash
 pip3 install -r requirements.txt
@@ -25,9 +24,7 @@ pip3 install -r requirements.txt
 
 ## File Description
 
-`PalmTracker.py`: Run this file to generate custom datasets. Go into the file and change the name of the directory and make other appropriate changes.
-
-`ResizeImages.py`: Run this file after PalmTracker.py in order to resize the images so that it can be fed into the Convolution Neural Network designed using tensorflow. The network accepts 89 x 100 dimensional image.
+`PalmTracker.py`: Run this file to generate custom datasets. On the menu, select `Images (i)` to capture 1000 training set. Select `Test (t)` to capture 100 testing set. The images will be in 89 x 100 dimensional image so it can be fed into the neural network.
 
 `ModelTrainer.ipynb`: This is the model trainer file. Run this file if you want to retrain the model using your custom dataset. We recommend installing [jupyter](https://jupyter.org/install) with pip3.
 
@@ -53,11 +50,24 @@ The model achieves an accuracy of **96.6%** on the validation dataset.
 
 The ratio of training set to validation set is **1000 : 100**.
 
-## How to train the model
+## Generating your own dataset
 
-To train your model, open `ModelTrainer.ipynb` in jupyter notebook to train your model. If you don't have jupyter notebook installed, you can convert the `ModelTrainer.ipynb` to `ModelTrainer.py` file by running this command in your terminal `ipython nbconvert --to python ModelTrainer.ipynb`. Now you can just run `python3 ModelTrainer.py` to train your model.
+In order to generate your own dataset, you must run `python3 PalmTracker.py` and follow the instructions in the terminal.
 
-## How to run the RealTime prediction
+Instructions:
+1. Enter gesture name. This will create 2 folders in /Dataset/ directory
+2. After loading, press 'i' to generate training data, 't' to generate test data.
+3. Press 'q' to quit the program
+
+The process may take a while since 1000 images will be captured as training set, and 100 images will be captured for validation set. Make sure to have a static background for best results.
+
+## How to train your own dataset
+
+Open `ModelTrainer.ipynb` in jupyter notebook to train your model. You will have to add more classes in the code if you want to add more gestures.
+
+Note: If you don't have jupyter notebook installed, you can convert the `ModelTrainer.ipynb` to `ModelTrainer.py` file by running this command in your terminal `ipython nbconvert --to python ModelTrainer.ipynb`. Now you can just run `python3 ModelTrainer.py` to train your model.
+
+## How to run the realtime prediction
 
 Run `python3 ContinuousGesturePredictor.py` and you will see a window named **Video Feed** appear on screen. Wait for a while until a window named **Thresholded** appears.
 
