@@ -66,4 +66,16 @@ export default class Server {
             method: ENDPOINTS.DOWNLOAD_LIST.method
         }).then(res => res.status === 200 ? res.json() : null)
         .then(res => res);
+
+    getDateModel = (d) =>
+        fetch(this.__url + ENDPOINTS.DOWNLOAD_DATE.url(d), {
+            method: ENDPOINTS.DOWNLOAD_DATE.method
+        }).then(res => res.status === 200 ? res.blob() : null)
+        .then(res => res);
+    
+    getLatestModel = () => 
+        fetch(this.__url + ENDPOINTS.DOWNLOAD.url, {
+            method: ENDPOINTS.DOWNLOAD.method
+        }).then(res => res.status === 200 ? res.blob() : null)
+        .then(res => res);
 }

@@ -46,3 +46,14 @@ SPECIFIC CUSTOM STYLES
     margin-top: 0px;
     border-radius: 20px;
 }
+
+/*
+================================
+DOWNLOAD VIEW STYLE
+================================
+*/
+.download-view {
+    flex: 2;
+    max-width: 45%;
+    width: 45%;
+}

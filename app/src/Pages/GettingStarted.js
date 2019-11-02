@@ -1,33 +1,15 @@
 import React, { useRef } from 'react';
 import { Carousel, Typography, Button, Icon } from 'antd';
 import './GettingStarted.css';
-import { Webcam, Server } from '../Utilities';
+import { Webcam } from '../Utilities';
+import { DownloadView } from '../Components';
 
 const GettingStarted = (props) => {
     const gettingStartedWebcam = new Webcam('webcam-video');
-    const serverConnectionInstance = new Server();
     const carouselRef = useRef(null);
 
     const nextSlide = () => carouselRef.current.next();
     const prevSlide = () => carouselRef.current.prev();
-
-    serverConnectionInstance.connect();
-    const versions = [];
-    serverConnectionInstance.getVersions().then(v => {
-        function checkTime (i) {
-            if (i < 10) {
-              i = "0" + i;
-            }
-            return i;
-        }
-        v.versions.forEach( versionDate => {
-            let d = new Date();
-            d.setTime(versionDate);
-            d = d.toLocaleDateString() + ' @ ' + checkTime(d.getHours()) + ':' + checkTime(d.getMinutes());
-            versions.push(d);
-        });
-        console.log(versions);
-    });
 
     return (
         <Carousel className="getting-started-carousel" ref={carouselRef}>
@@ -101,18 +83,14 @@ const GettingStarted = (props) => {
                         along with a tool to allow simulating key press and mouse movements.
                     </Typography.Title>
                 </Typography>
+                <DownloadView className="download-view" />
                 <Button.Group>
                     <Button
                         onClick={prevSlide}
                     >
                         <Icon type="left" />
                         Back
-                </Button>
-                    <Button
-                        type="primary"
-                    >
-                        Download Model
-                </Button>
+                    </Button>
                     <Button
                         onClick={nextSlide}
                     >

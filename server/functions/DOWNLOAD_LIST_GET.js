@@ -4,7 +4,6 @@ const path = require('path');
 const STATUS_FILE = __dirname+'/../uploads/status.json';
 
 module.exports = (getRequest, getResponse) => {
-    const { date } = getRequest.params;
     fs.exists(STATUS_FILE, (exists) => {
         if (exists) {
             fs.readFile(STATUS_FILE, (er, data) => {
