@@ -2,6 +2,8 @@
 import cv2
 import imutils
 import numpy as np
+import re
+import os
 
 # global variables
 bg = None
@@ -57,8 +59,34 @@ def main():
     # initialize num of frames
     num_frames = 0
     image_num = 0
+    image_num_limit = 0
 
-    start_recording = False
+    start_recording_image = False
+    start_recording_test = False
+
+    # Print start message
+    print("\x1b[0;33;40m"+ "This file will generate custom datasets.\nInstructions:\n" +
+          "1. Enter gesture name. This will create 2 folders in /Dataset/ directory\n" +
+          "2. After loading, press 'i' to generate training data, 't' to generate test data.\n" +
+          "3. Press 'q' to quit the program" + '\x1b[0m')
+
+    # Get the user input
+    while(True):
+        gesture = input("Input gesture name: ")
+        if re.match("^[A-Za-z0-9_-]*$", gesture):
+            break
+        else:
+            print("Input only accepts [a-z], [0-9], '-' and '_'")
+            continue
+
+    # Create Images and Test folder in /dataset/, skip creating an existing directory
+    try:
+        os.makedirs("Dataset/" + gesture + "Images")
+        os.makedirs("Dataset/" + gesture + "Test")
+    except FileExistsError:
+        # directory already exists
+        print("Directory Already Exists")
+        pass
 
     # keep looping, until interrupted
     while(True):
@@ -89,7 +117,8 @@ def main():
             # so that our running average model gets calibrated
             if num_frames < 30:
                 run_avg(gray, aWeight)
-                print(num_frames)
+                print("Calibrating background image... " + str(num_frames+1) + "/30")
+
             else:
                 # segment the hand region
                 hand = segment(gray)
@@ -103,12 +132,23 @@ def main():
                     # draw the segmented region and display the frame
                     cv2.drawContours(
                         clone, [segmented + (right, top)], -1, (0, 0, 255))
-                    if start_recording:
-
-                        # Mention the directory in which you wanna store the images followed by the image name
-                        cv2.imwrite("Dataset/PointImages/point_" +
-                                    str(image_num) + '.png', thresholded)
+                    
+                    # Set image destination if 'I' is pressed
+                    if start_recording_image:
+                        img = cv2.resize(thresholded, (100, 89))
+                        img_filename = "Dataset/{}Images/{}_{}.png".format(gesture, gesture, str(image_num))
+                        cv2.imwrite(img_filename, img)
+                        print("Image Captured {}/1000".format(str(image_num+1)))
                         image_num += 1
+                    
+                    # Set test destination if 'T' is pressed
+                    elif start_recording_test:
+                        img = cv2.resize(thresholded, (100, 89))
+                        img_filename = "Dataset/{}Test/{}_{}.png".format(gesture, gesture, str(image_num))
+                        cv2.imwrite(img_filename, img)
+                        print("Image Captured {}/100".format(str(image_num+1)))
+                        image_num += 1
+                    
                     cv2.imshow("Thesholded", thresholded)
 
             # draw the segmented hand
@@ -124,11 +164,16 @@ def main():
             keypress = cv2.waitKey(1) & 0xFF
 
             # if the user pressed "q", then stop looping
-            if keypress == ord("q") or image_num > 1000:
+            if keypress == ord("q") or image_num > image_num_limit:
                 break
 
-            if keypress == ord("s"):
-                start_recording = True
+            if keypress == ord("i"):
+                start_recording_image = True
+                image_num_limit = 1000
+                
+            if keypress == ord("t"):
+                start_recording_test = True
+                image_num_limit = 99
 
         else:
             print("[Warning!] Error input, Please check that your camera is connected.")
