@@ -161,9 +161,9 @@ def showStatistics(predictedClass, confidence):
     }
 
     commandDictionary = {
-        "Palm" : "play-pause",
-        "Fist" : "",
-        "Point": "arrow-up",
+        "Palm": "play-pause",
+        "Fist": "",
+        "Point": "volume-up",
         "Swing": "mute"
     }
 
