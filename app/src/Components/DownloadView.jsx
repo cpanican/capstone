@@ -30,7 +30,7 @@ export default class DownloadView extends Component {
       });
       this.serverConnection.getVersions().then((v) => {
         this.setState({
-          versions: v.versions,
+          versions: v ? v.versions : null,
           loading: false,
         });
       });
