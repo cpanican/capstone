@@ -1,3 +1,4 @@
+const ipc = window.require('electron').ipcRenderer;
 const SERVER_STATUS = {
     DEAD : 'DEAD',
     ALIVE : 'ALIVE',
@@ -67,15 +68,27 @@ export default class Server {
         }).then(res => res.status === 200 ? res.json() : null)
         .then(res => res);
 
-    getDateModel = (d) =>
-        fetch(this.__url + ENDPOINTS.DOWNLOAD_DATE.url(d), {
-            method: ENDPOINTS.DOWNLOAD_DATE.method
-        }).then(res => res.status === 200 ? res.blob() : null)
-        .then(res => res);
+    getDateModel = async (d) => {
+        return new Promise((resolve, reject) => {
+            ipc.on('save-model-done', (e, reply) => {
+                resolve(true);
+            });
+            ipc.send('save-model', {
+                url : this.__url + ENDPOINTS.DOWNLOAD_DATE.url(d),
+                method : ENDPOINTS.DOWNLOAD_DATE.method
+            });
+        });
+    }
     
-    getLatestModel = () => 
-        fetch(this.__url + ENDPOINTS.DOWNLOAD.url, {
-            method: ENDPOINTS.DOWNLOAD.method
-        }).then(res => res.status === 200 ? res.blob() : null)
-        .then(res => res);
+    getLatestModel = () => {
+        return new Promise((resolve, reject) => {
+            ipc.on('save-model-done', (e, reply) => {
+                resolve(true);
+            });
+            ipc.send('save-model', {
+                url : this.__url + ENDPOINTS.DOWNLOAD.url,
+                method : ENDPOINTS.DOWNLOAD_DATE.method
+            });
+        });
+    }
 }
