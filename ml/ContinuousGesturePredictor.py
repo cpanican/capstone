@@ -166,8 +166,8 @@ def showStatistics(predictedClass, confidence):
         "Point": "arrow-up"
     }
 
-    xdoParse = xdoParse(commandDictionary)
-    xdoParse.doCommand(className[predictedClass])
+    parser = xdoParse(commandDictionary)
+    parser.doCommand(className[predictedClass])
 
     cv2.putText(textImage, "Predicted Class: " + className[predictedClass],
                 (30, 30),
