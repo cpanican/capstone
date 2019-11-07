@@ -28,3 +28,4 @@ yarn-error.log*
 # server
 */uploads/
 */appFiles/
+*/__pycache__/
