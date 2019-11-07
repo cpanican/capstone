@@ -1,0 +1,25 @@
+.download-view-container {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+}
+.download-view-container i {
+    color: white;
+    font-size: 30px;
+}
+.download-alert {
+    margin-bottom: 5px;
+}
+.download-version-list {
+    max-height: 100%;
+    overflow-y: auto;
+    margin-bottom: 5px;
+}
+.download-version-button {
+    margin: 5px auto;
+}
+.download-version-button.latest {
+    position: sticky;
+    top: 0px;
+    z-index: 100;
+}

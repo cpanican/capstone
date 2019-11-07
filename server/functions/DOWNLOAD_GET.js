@@ -26,7 +26,6 @@ module.exports = (getRequest, getResponse) => {
 
                     let MODEL_FILE = __dirname + '/../uploads/' + fileName;
                     MODEL_FILE = path.resolve(MODEL_FILE);
-
                     getResponse.download(MODEL_FILE, downloadFileName);
                 }
             });
