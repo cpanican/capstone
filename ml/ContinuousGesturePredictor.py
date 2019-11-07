@@ -162,8 +162,9 @@ def showStatistics(predictedClass, confidence):
 
     commandDictionary = {
         "Palm" : "play-pause",
-        "Fist" : "mute",
-        "Point": "arrow-up"
+        "Fist" : "",
+        "Point": "arrow-up",
+        "Swing": "mute"
     }
 
     parser = xdoParse(commandDictionary)
