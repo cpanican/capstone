@@ -7,6 +7,7 @@ import numpy as np
 from PIL import Image
 import cv2
 import imutils
+from xdoParse import xdoParse
 
 # global variables
 bg = None
@@ -158,6 +159,15 @@ def showStatistics(predictedClass, confidence):
         2: "Fist",
         3: "Point"
     }
+
+    commandDictionary = {
+        "Palm" : "play-pause",
+        "Fist" : "mute",
+        "Point": "arrow-up"
+    }
+
+    xdoParse = xdoParse(commandDictionary)
+    xdoParse.doCommand(className[predictedClass])
 
     cv2.putText(textImage, "Predicted Class: " + className[predictedClass],
                 (30, 30),
