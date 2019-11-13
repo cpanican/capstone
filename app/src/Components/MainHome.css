@@ -1,0 +1,19 @@
+.main-home-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.main-home-container article {
+    user-select: none;
+    cursor: default;
+}
+
+.main-home-container .button-bar {
+    display: flex;
+    justify-content: space-evenly;
+    width: 45%;
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GettingStarted, Splash } from './Pages/index';
+import { GettingStarted, Splash, Main } from './Pages/index';
 import './App.css';
 
 const ipc = window.require('electron').ipcRenderer;
@@ -33,7 +33,7 @@ class App extends Component {
         {
           !loading && winType === 'GettingStarted'
             ? <GettingStarted />
-            : <div> MAin </div>
+            : <Main />
         }
       </div>
     );

@@ -2,7 +2,7 @@ import React from 'react';
 import './Splash.css';
 import { Typography, Icon } from 'antd';
 
-const Splash = () => (
+const Splash = (
   <div className="splash-container">
     <Typography>
       <Typography.Title style={{ fontSize: '6rem' }}>
