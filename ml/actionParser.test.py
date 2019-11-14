@@ -1,12 +1,12 @@
-from ml.actionParser import actionParser, MODIFIERS, KEYS
+from actionParser import actionParser, MODIFIERS, KEYS
 
 
 commandDictionary = {
     # Cmd Name -- Key Value
     # See possible key values in cliclick docs.
-    # cliclick -h 
-    "Left" : "volume-up",
-    "Right" : ["ctrl", "arrow-left"]
+    # cliclick -h
+    "Left": "volume-up",
+    "Right": ["ctrl", "arrow-left"]
 }
 
 parser = actionParser(commandDictionary)
