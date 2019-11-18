@@ -25,6 +25,8 @@ yarn-error.log*
 /ml/Temp.png
 .ipynb_*
 
+.vscode/
+
 # server
 */uploads/
 */appFiles/
