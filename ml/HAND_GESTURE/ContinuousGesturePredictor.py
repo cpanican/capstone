@@ -160,14 +160,6 @@ def showStatistics(predictedClass, confidence):
         3: "Point"
     }
 
-    commandDictionary = {
-        "Palm": "play-pause",
-        "Fist": "",
-        "Point": "volume-up",
-        "Swing": "mute"
-    }
-
-    parser = actionParser(commandDictionary)
     parser.doCommand(className[predictedClass])
 
     cv2.putText(textImage, "Predicted Class: " + className[predictedClass],
@@ -219,6 +211,17 @@ convnet = regression(convnet, optimizer='adam', learning_rate=0.001,
                      loss='categorical_crossentropy', name='regression')
 
 model = tflearn.DNN(convnet, tensorboard_verbose=0)
+
+
+
+commandDictionary = {
+    "Palm": "play-pause",
+    "Fist": "",
+    "Point": "volume-up",
+    "Swing": "mute"
+}
+
+parser = actionParser(commandDictionary)
 
 # Load Saved Model
 model.load("TrainedModel/GestureRecogModel.tfl")

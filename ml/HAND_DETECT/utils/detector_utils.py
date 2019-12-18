@@ -58,7 +58,7 @@ def draw_box_on_image(num_hands_detect, score_thresh, scores, boxes, im_width, i
             p1 = (int(left), int(top))
             p2 = (int(right), int(bottom))
             cropped = image_np[int(top):int(bottom), int(left):int(right)]
-            # cv2.imwrite("CROPPED.jpg",cropped)
+            cv2.imwrite("CROPPED.jpg",cropped)
             cv2.rectangle(image_np, p1, p2, (77, 255, 9), 3, 1)
 
 

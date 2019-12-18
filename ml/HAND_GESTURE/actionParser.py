@@ -121,8 +121,13 @@ class actionParser:
             self.__actionTrigger(commandName)
         else:
             if self.lastCommand == commandName:
-                time.sleep(self.waitTime)
-            self.__actionTrigger(commandName)
+                # time.sleep(self.waitTime)
+                # print("\tIGNORING...")
+                pass
+            else:
+                # print(self.lastCommand, commandName, self.waitTime)
+                print("\tDOING ACTION...", commandName, self.commandDictionary[commandName])
+                self.__actionTrigger(commandName)
             
                 
 
