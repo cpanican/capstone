@@ -1,6 +1,7 @@
 const {
   app, BrowserWindow, shell, ipcMain,
 } = require('electron');
+const { exec } = require('child_process');
 const electronDl = require('electron-dl');
 const path = require('path');
 const isDev = require('electron-is-dev');
@@ -29,6 +30,20 @@ const createSettings = (ev) => {
     else getWindow(ev);
   });
 };
+
+const startPredictor = (ev) => {
+  exec("pwd", (error, stdout, stderr) => {
+    if (error) {
+      console.error("FAILED TO START PREDICTOR", error);
+    }
+    console.log(stdout);
+  });
+  exec("./startPredictor.sh", (error, stdout, stderr) => {
+    if (error) {
+      console.error("FAILED TO START PREDICTOR", error);
+    }
+  });
+}
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -62,6 +77,7 @@ const createWindow = () => {
 app.on('ready', () => {
   ipcMain.on('get-window', getWindow);
   ipcMain.on('create-settings', createSettings);
+  ipcMain.on('start-predictor', startPredictor);
   ipcMain.on('save-model', (event, arg) => {
     electronDl.download(mainWindow, arg.url, {
       directory: `${app.getAppPath()}/appFiles/downloads`,

@@ -4,6 +4,10 @@ import {
 } from 'antd';
 import './MainHome.css';
 
+const ipc = window.require('electron').ipcRenderer;
+
+const ipcStartPredictor = () => { ipc.send('start-predictor',{}); }
+
 const MainHome = () => (
   <div className="main-home-container">
     <Typography>
@@ -12,7 +16,7 @@ const MainHome = () => (
       </Typography.Title>
     </Typography>
     <span className="button-bar">
-      <Button shape="round" icon="right-circle" size="large">
+      <Button shape="round" icon="right-circle" size="large"  onClick={ipcStartPredictor}>
             Start
       </Button>
       <Button shape="round" icon="video-camera" size="large">
