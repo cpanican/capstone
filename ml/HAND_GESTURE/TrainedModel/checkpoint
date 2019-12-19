@@ -1,0 +1,2 @@
+model_checkpoint_path: "/Users/chris/projects/capstone-test/TrainedModel/GestureRecogModel.tfl"
+all_model_checkpoint_paths: "/Users/chris/projects/capstone-test/TrainedModel/GestureRecogModel.tfl"
