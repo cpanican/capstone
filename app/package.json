@@ -17,8 +17,10 @@
 		"electron-is-dev": "^0.3.0",
 		"electron-publisher-s3": "^20.17.2",
 		"eslint": "5.16.0",
+		"history": "^4.10.1",
 		"react": "^16.4.1",
-		"react-dom": "^16.10.1"
+		"react-dom": "^16.10.1",
+		"react-router-dom": "^5.1.2"
 	},
 	"devDependencies": {
 		"concurrently": "^3.6.0",
